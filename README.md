@@ -1,3 +1,5 @@
+Documentation link : https://suryanshsahu1801.notion.site/AstroCulture-Assignment-Document-2529e56e264a8081a07bf543524361bd
+
 To complete the setup and run the application, follow these steps carefully:
 
 1. **Clone the Repository:** Download or clone the project : https://github.com/suryansh1801/astro-culture-apis.git code onto your local machine by using the following command.
@@ -6,7 +8,7 @@ To complete the setup and run the application, follow these steps carefully:
     git clone https://github.com/suryansh1801/astro-culture-apis.git
     ```
     
-2. **Change directory to pie-pay :** Run the following command 
+2. **Change directory to astro-culture-apis :** Run the following command 
     
     ```jsx
     cd astro-culture-apis
@@ -28,13 +30,13 @@ To complete the setup and run the application, follow these steps carefully:
     ```
     
 5. **Start MongoDB:** with the correct remote connection string. Make sure you have MongoDB installed and running locally or update your .env with the correct remote connection string.
-6. **Run the Server:**Start the Express server with:
+6. **Run the Server:** Start the Express server with:
     
     ```jsx
     npm run dev
     ```
     
-7. **Test the Endpoints:** and  endpoints.
+7. **Test the Endpoints:** 
     
     Use Postman or similar tools to test the following curls : 
     
@@ -51,7 +53,7 @@ To complete the setup and run the application, follow these steps carefully:
     }'
     ```
     
-    1. POST : /login
+    2. POST : /login
     
     ```jsx
     curl --location 'http://localhost:3001/api/auth/login' \
@@ -63,31 +65,33 @@ To complete the setup and run the application, follow these steps carefully:
     ```
     
 
-1. GET : /today
+    3. GET : /today
 
-```jsx
-curl --location 'http://localhost:3001/api/horoscope/today' \
---header 'Content-Type: application/json' \
---header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YTE5MmJmZDllNTZiZjVmOThiODQyYyIsImlhdCI6MTc1NTQzNjA4OCwiZXhwIjoxNzU1NTIyNDg4fQ.tAam8lHnaw4yyVBKqrwqX5oX6bf7ttDnPRdy5j8LTzw'
-```
+    ```jsx
+    curl --location 'http://localhost:3001/api/horoscope/today' \
+    --header 'Content-Type: application/json' \
+    --header 'Authorization: Bearer                     eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YTE5MmJmZDllNTZiZjVmOThiODQyYyIsImlhdCI6MTc1NTQzNjA4OCwiZXhwIjoxNzU1NTIyNDg4fQ.tAam8lHnaw4yyVBKqrwqX5oX6bf7ttDnPRdy5j8LTzw'
+    ```
 
-4. GET : /history
+    4. GET : /history
 
-```jsx
-curl --location 'http://localhost:3001/api/horoscope/history' \
---header 'Content-Type: application/json' \
---header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YTE5MmJmZDllNTZiZjVmOThiODQyYyIsImlhdCI6MTc1NTQzNjA4OCwiZXhwIjoxNzU1NTIyNDg4fQ.tAam8lHnaw4yyVBKqrwqX5oX6bf7ttDnPRdy5j8LTzw'
-```
+    ```jsx
+    curl --location 'http://localhost:3001/api/horoscope/history' \
+    --header 'Content-Type: application/json' \
+    --header 'Authorization: Bearer     eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YTE5MmJmZDllNTZiZjVmOThiODQyYyIsImlhdCI6MTc1NTQzNjA4OCwiZXhwIjoxNzU1NTIyNDg4fQ.tAam8lHnaw4yyVBKqrwqX5oX6bf7ttDnPRdy5j8LTzw'
+    ```
 
-5. GET: /today for rate-limiting check
+    5. GET: /today for rate-limiting check
 
-```jsx
-curl --location 'http://localhost:3001/api/horoscope/today' \
---header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YTE5YTU4N2E0ZGNkYTAwMTk5OGI4ZSIsImlhdCI6MTc1NTQyMTI3MiwiZXhwIjoxNzU1NTA3NjcyfQ.s5BwM6QstBBd6uVS_W07Wd844EEIqL4zsrb3RVg0cNM'
-```
+    ```jsx
+    curl --location 'http://localhost:3001/api/horoscope/today' \
+    --header 'Authorization: Bearer     eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YTE5YTU4N2E0ZGNkYTAwMTk5OGI4ZSIsImlhdCI6MTc1NTQyMTI3MiwiZXhwIjoxNzU1NTA3NjcyfQ.s5BwM6QstBBd6uVS_W07Wd844EEIqL4zsrb3RVg0cNM'
+    ```
 
-1. API docs 
+    6. API docs 
 
-```jsx
-http://localhost:3001/api-docs/
-```
+    ```jsx
+    http://localhost:3001/api-docs/
+    ```
+
+I have taken some help from Google Gemini. 
