@@ -28,7 +28,7 @@ app.use("/api/horoscope", horoscopeRoutes);
 
 app.get("/", (req: Request, res: Response) => {
   logger.info("Health check endpoint hit");
-  res.send("Horoscope API (TypeScript) is running... 🔮");
+  res.send("Horoscope API (TypeScript) is running...");
 });
 
 // Error handling middleware

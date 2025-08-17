@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, RequestHandler, Response } from "express";
 import logger from "../utils/logger";
 import jwt from "jsonwebtoken";
 import User from "../models/User";
@@ -21,7 +21,9 @@ export const signup: RequestHandler = async (req, res) => {
   try {
     const userExists = await User.findOne({ email });
     if (userExists) {
-      logger.warn("Signup failed: User already exists", { email: req.body.email });
+      logger.warn("Signup failed: User already exists", {
+        email: req.body.email,
+      });
       return res.status(400).json({ message: "User already exists" });
     }
     const zodiacSign = getZodiacSign(new Date(birthdate));
@@ -57,7 +59,9 @@ export const login: RequestHandler = async (req, res) => {
       logger.warn("Login failed: User not found", { email: req.body.email });
       return res.status(401).json({ message: "Invalid email or password" });
     }
-    if (await user.comparePassword(password)) {
+
+    const isUserAuthenticated = await user.comparePassword(password);
+    if (isUserAuthenticated) {
       logger.info("User logged in successfully", { userId: user._id, email });
       res.json({
         _id: user._id,
