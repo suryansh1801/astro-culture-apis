@@ -47,10 +47,7 @@ export const protect: RequestHandler = async (
         error,
         route: req.originalUrl,
       });
-      if (!decoded || typeof decoded !== "object" || !decoded.id) {
-        logger.warn("Invalid token payload", { token });
-        return res.status(401).json({ message: "Token is not valid" });
-      }
+
       return res.status(401).json({ message: "Not authorized, token failed" });
     }
   }

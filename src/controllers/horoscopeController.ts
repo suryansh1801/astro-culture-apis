@@ -1,23 +1,12 @@
-import { Request, RequestHandler, Response } from "express";
-import logger from "../utils/logger";
+import { RequestHandler } from "express";
 import HoroscopeHistory from "../models/HoroscopeHistory";
-import { getDailyHoroscope, ZodiacSign } from "../utils/horoscopeData";
+import { getDailyHoroscope } from "../utils/horoscopeData";
+import logger from "../utils/logger";
+import { ZodiacSign } from "../utils/zodiacCalculator";
 
-export const getTodaysHoroscope: RequestHandler = async (
-  req: Request,
-  res: Response
-) => {
-  if (req.user) {
-    logger.info("Horoscope fetch attempt", {
-      userId: req.user._id,
-      zodiacSign: req.user.zodiacSign,
-    });
-  }
+export const getTodaysHoroscope: RequestHandler = async (req, res) => {
   try {
-    if (!req.user) {
-      logger.error("User not found", { route: "getTodaysHoroscope" });
-      return res.status(401).json({ message: "User not found" });
-    }
+    if (!req.user) return res.status(401).json({ message: "User not found" });
 
     const { _id: userId, zodiacSign } = req.user;
 
@@ -27,6 +16,7 @@ export const getTodaysHoroscope: RequestHandler = async (
     let history = await HoroscopeHistory.findOne({ userId, date: today });
 
     if (history) {
+      logger.info("Horoscope history found", { userId, date: today });
       return res.json({
         date: today.toISOString().split("T")[0],
         zodiacSign: history.zodiacSign,
@@ -34,23 +24,28 @@ export const getTodaysHoroscope: RequestHandler = async (
       });
     }
 
-    const horoscope = getDailyHoroscope(zodiacSign as ZodiacSign);
+    const horoscopeText = getDailyHoroscope(zodiacSign as ZodiacSign);
 
-    // Save to history
-    const newHistory = new HoroscopeHistory({ userId, zodiacSign, horoscope });
-    await newHistory.save();
-    logger.info("Horoscope delivered", { userId, zodiacSign });
+    history = await HoroscopeHistory.create({
+      userId,
+      zodiacSign,
+      date: today,
+      horoscopeText,
+    });
 
-    res.status(200).json({ zodiacSign, horoscope });
+    logger.info("Horoscope history created", { userId, date: today });
+    res.json({
+      date: today.toISOString().split("T")[0],
+      zodiacSign: history.zodiacSign,
+      horoscope: history.horoscopeText,
+    });
   } catch (error) {
+    logger.error("Error fetching horoscope today", { error });
     res.status(500).json({ message: "Server Error" });
   }
 };
 
-export const getHoroscopeHistory: RequestHandler = async (
-  req: Request,
-  res: Response
-) => {
+export const getHoroscopeHistory: RequestHandler = async (req, res) => {
   try {
     if (!req.user) return res.status(401).json({ message: "User not found" });
 
@@ -63,6 +58,7 @@ export const getHoroscopeHistory: RequestHandler = async (
       date: { $gte: sevenDaysAgo },
     }).sort({ date: -1 });
 
+    logger.info("Horoscope history fetched", { userId: req.user._id });
     res.json(
       history.map((h) => ({
         date: h.date.toISOString().split("T")[0],
@@ -71,6 +67,7 @@ export const getHoroscopeHistory: RequestHandler = async (
       }))
     );
   } catch (error) {
+    logger.error("Error fetching horoscope history", { error });
     res.status(500).json({ message: "Server Error" });
   }
 };
